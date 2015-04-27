@@ -25,7 +25,8 @@ angular.module('starter.controllers', [])
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
-.controller('LoginCtrl', function($scope,$state,$stateParams,$ionicModal,DataAccess) {
+.controller('LoginCtrl', function($scope,$state,$stateParams,$ionicModal,$ionicPopup,$ionicSideMenuDelegate,DataAccess) {
+    $ionicSideMenuDelegate.canDragContent(false)
    $scope.loginData = {};
    $scope.registerData = {};
   $ionicModal.fromTemplateUrl('templates/register.html', {
@@ -44,13 +45,27 @@ angular.module('starter.controllers', [])
      DataAccess.logIn($scope.loginData.username,$scope.loginData.password).success(function(data){
           console.log("login");
           $state.go('app.playlists');
-        });
+        })
+     .error(function(data, status, headers, config) {
+    var alertPopup = $ionicPopup.alert({
+     title: 'Notification',
+     template: 'Incorrect username & password'
+   });
+  });
+    
   };
     $scope.doJoin= function() {
     console.log('Doing Join', $scope.registerData);
     DataAccess.signUp($scope.registerData).success(function(data){
           console.log("registerd");
-        });
+          $state.go("app.playlists");
+        })
+      .error(function(data, status, headers, config) {
+    var alertPopup = $ionicPopup.alert({
+     title: 'Notification',
+     template: 'Registration Failed'
+   });
+  });
   };
 })
 .controller('BrowseCtrl',['$scope','DataAccess',function($scope,DataAccess){
