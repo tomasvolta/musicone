@@ -1,0 +1,23 @@
+/* Empty. Add your own CSS if you like */
+
+
+/*Login Design */
+
+.LoginBackground{
+	
+background: url(../img/login-background.jpg) no-repeat center top #4d3e32; background-size: 100% auto;
+}
+.LoginBackground .scroll { height: 100%; }
+
+.LoginButtom { bottom: 15%; box-sizing: border-box; padding: 0 40px; position: absolute; width: 100%; }
+.LoginButtom button{border:none; height:60px; padding:0; border-radius:5px; margin:0 0 40px; display:inline-block; font-family: 'Open Sans', sans-serif; text-transform:uppercase; color:#fff; font-weight:600; font-size:20px; }
+.LoginButtom button.activated, .LoginButtom button:hover{color:#fff; }
+.LoginButtom button.button-login{background:#ca0088;}
+.LoginButtom button.button-register{background:#0095da;}
+.LoginButtom button.button-login.activated{background: #860059;}
+.LoginButtom button.button-register.activated{background: #00608b;}
+
+.LoginButtom .item-input span{color: #fff;}
+.LoginButtom .item-input input[type="text"],input[type="password"]{ border-radius:5px; color:#fff; background-color: #262626;padding: 10px;}
+
+

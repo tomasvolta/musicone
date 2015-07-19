@@ -53,7 +53,15 @@ angular.module('starter.controllers', [])
       $scope.playButton = playButton;
     });
 })
-.controller('LoginCtrl', function($scope,$state,$stateParams,$ionicModal,$ionicPopup,$ionicSideMenuDelegate,$ionicLoading,DataAccess) {
+.controller('LoginCtrl', function(
+  $scope,
+  $state,
+  $stateParams,
+  $ionicModal,
+  $ionicPopup,
+  $ionicSideMenuDelegate,
+  $ionicLoading,
+  DataAccess) {
     $ionicSideMenuDelegate.canDragContent(false)
    $scope.loginData = {};
    $scope.registerData = {};
@@ -66,19 +74,22 @@ angular.module('starter.controllers', [])
     $scope.modalRegister.hide();
   };
   $scope.register = function() {
+    console.log("register");
     $scope.modalRegister.show();
   };
    $scope.doLogin = function() {
+    $ionicLoading.show();
     console.log('Doing login', $scope.loginData);
      DataAccess.logIn($scope.loginData.username,$scope.loginData.password).success(function(data){
-          console.log("login");
-          $state.go('app.playlists');
+          $ionicLoading.hide();
+          $state.go('app.search');
         })
      .error(function(data, status, headers, config) {
-    var alertPopup = $ionicPopup.alert({
-     title: 'Notification',
-     template: 'Incorrect username & password'
-   });
+      $ionicLoading.hide();
+      var alertPopup = $ionicPopup.alert({
+       title: 'Notification',
+       template: 'Incorrect username & password'
+     });
   });
     
   };
@@ -103,11 +114,19 @@ angular.module('starter.controllers', [])
   });
   };
 })
-.controller('SearchlistCtrl', function($scope, $stateParams,$http,$state,DataMusicone,$ionicScrollDelegate) {
-   var promises= DataMusicone.getTrack();
-   promises.then(function(result){
+.controller('SearchlistCtrl', function($scope, $stateParams,soundcloud,$http,$state,DataMusicone,$ionicScrollDelegate) {
+   // var promises= DataMusicone.getTrack();
+   // promises.then(function(result){
+   //  $scope.song = result;
+   // });
+$scope.search = {name:""};
+$scope.searchArtist = function(name){
+var promises =DataMusicone.searchTrack(name);
+promises.then(function(result){
     $scope.song = result;
-   })
+    console.log(result);
+   });
+}
 
     $scope.scrollTop = function() {
         $ionicScrollDelegate.resize();  

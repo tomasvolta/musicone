@@ -74,9 +74,22 @@ angular.module('starter.services',[]).factory('DataAccess',['$http','PARSE_CREDE
     APP_ID: '3U6bAsxJmBtH76IwbCDHfdzqzZEd6ttWO9lAzWT0',
     REST_API_KEY:'dFAuE3px7jvhHQIweM64g8OcSi3i1A49LsGe5Vvk'
 })
-.factory('DataMusicone', function($http) {
+.factory('DataMusicone', function($q) {
     var data = [];
+    var search = [];
     return {
+        searchTrack: function(searchFilter){
+                   var deferred = $q.defer();
+                SC.initialize({
+                    client_id: '9eb9bf68a9df94ee4d926736ff47a147',
+                    redirect_uri: 'http://soundcloud.dev/soundcloud.html'
+                });
+                var data;
+               SC.get('/users', {q: searchFilter}, function (data) {
+                      deferred.resolve( data);
+                });
+                return deferred.promise;
+        },
         getTrack: function(){
             return $http.get('http://api.soundcloud.com/resolve.json?url=https://soundcloud.com/user887792035/sets/musicone&client_id=9eb9bf68a9df94ee4d926736ff47a147').then(function(resp) {
              data= resp.data.tracks;
@@ -87,4 +100,16 @@ angular.module('starter.services',[]).factory('DataAccess',['$http','PARSE_CREDE
            data = indata;
         }
     }
-});
+})
+.factory('soundcloud', function($q) {
+     var deferred = $q.defer();
+    SC.initialize({
+        client_id: '9eb9bf68a9df94ee4d926736ff47a147',
+        redirect_uri: 'http://soundcloud.dev/soundcloud.html'
+    });
+    var data;
+   SC.get('/users', {q: 'rihanna'}, function (data) {
+          deferred.resolve( data);
+    });
+    return deferred.promise;
+});;

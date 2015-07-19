@@ -1,0 +1,19 @@
+<ion-view view-title="Search" >
+
+  <ion-content >
+ 	
+  	 <div class="list">
+  	 	 <label class="item item-input">
+		    <i class="icon ion-search placeholder-icon" ></i>
+		    <input type="search" ng-model="search.name" ng-change="scrollTop()" placeholder="Search">
+		  </label>
+      <button class="button-block button-positive" ng-click="searchArtist(search.name)">SEARCH</button>
+    <a  class="item item-thumbnail-left" ng-repeat="playlist in song " href="#/app/playlists/{{playlist.id}}">
+    		<img ng-src="{{playlist.avatar_url}}">
+    		<h2>{{playlist.first_name}}</h2>
+    		<p>{{playlist.followers_count}}</p>
+    </a>
+</div>
+	
+  </ion-content>
+</ion-view>
